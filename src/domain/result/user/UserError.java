@@ -9,6 +9,7 @@ public class UserError {
     public static final Error EMAIL_INVALID = new Error("USER_EMAIL_INVALID", "Invalid email format");
     public static final Error UNDERAGE = new Error("USER_UNDERAGE", "User must be at least 18 years old");
 
-    public static final Error CREATION_FAILED = new Error("USER_CREATION_FAILED", "An unexpected error occurred while creating the user");
     public static final Error EMAIL_ALREADY_EXISTS = new Error("USER_EMAIL_ALREADY_EXISTS", "Email is already registered");
+
+    public static final Error CREATION_FAILED = new Error("USER_CREATION_FAILED", "An unexpected error occurred while creating the user");
 }
