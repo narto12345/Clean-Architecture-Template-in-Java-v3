@@ -1,7 +1,5 @@
 package domain.validation.user;
 
-import java.time.LocalDate;
-
 import domain.model.User;
 import domain.result.Notification;
 import domain.result.user.UserError;
@@ -11,14 +9,14 @@ public class UserCreationValidation {
     public static Notification validate(User user) {
         Notification notification = new Notification();
 
-        validatetName(user, notification);
+        validateName(user, notification);
         validateEmail(user, notification);
         validateBirthDate(user, notification);
 
         return notification;
     }
 
-    private static void validatetName(User user, Notification notification) {
+    private static void validateName(User user, Notification notification) {
         if (user.getName() == null || user.getName().isBlank()) {
             notification.addError(UserError.NAME_REQUIRED);
         }
@@ -41,9 +39,7 @@ public class UserCreationValidation {
             return;
         }
 
-        if (user.isUnderage(LocalDate.now(
-
-        ))) {
+        if (user.isUnderage()) {
             notification.addError(UserError.UNDERAGE);
         }
     }

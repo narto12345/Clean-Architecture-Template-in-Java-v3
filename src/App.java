@@ -18,8 +18,7 @@ public class App {
 
         mediator.register(CreateUserCommand.class, useCase);
 
-        CreateUserCommand userCommand = new CreateUserCommand(
-                new CreateUserRequestDto("john", "john@hotmail.com", LocalDate.of(2000, 2, 18)));
+        CreateUserCommand userCommand = new CreateUserCommand(new CreateUserRequestDto("john", "john@hotmail.com", LocalDate.of(2000, 2, 18)));
 
         Result<CreateUserResponse> result = mediator.send(userCommand);
 
