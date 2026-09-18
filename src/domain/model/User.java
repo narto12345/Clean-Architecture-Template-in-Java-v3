@@ -37,8 +37,8 @@ public class User {
         return birthDate;
     }
 
-    public boolean isUnderage() {
-        return Period.between(birthDate, LocalDate.now()).getYears() < 18;
+    public boolean isUnderage(LocalDate currentDate) {
+        return Period.between(birthDate, currentDate).getYears() < 18;
     }
 
     @Override

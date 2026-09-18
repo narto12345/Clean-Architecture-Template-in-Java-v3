@@ -20,7 +20,7 @@ public class CreateUserUseCase implements CommandHandler<CreateUserCommand, Resu
     @Override
     public Result<CreateUserResponse> handle(CreateUserCommand createUserCommand) {
 
-        User userToCreate = createUserCommand.toDamain();
+        User userToCreate = createUserCommand.toDomain();
         Notification notification = UserCreationValidation.validate(userToCreate);
 
         if (notification.hasErrors()) {

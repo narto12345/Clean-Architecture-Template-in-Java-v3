@@ -7,7 +7,7 @@ import domain.result.Result;
 
 public class CreateUserCommand implements Command<Result<CreateUserResponse>> {
 
-    private CreateUserRequestDto request;
+    private final CreateUserRequestDto request;
 
     public CreateUserCommand(CreateUserRequestDto request) {
         this.request = request;
@@ -17,7 +17,7 @@ public class CreateUserCommand implements Command<Result<CreateUserResponse>> {
         return this.request;
     }
 
-    public User toDamain() {
+    public User toDomain() {
         return User.createNew(request.getName(), request.getEmail(), request.getBirthDate());
     }
 }

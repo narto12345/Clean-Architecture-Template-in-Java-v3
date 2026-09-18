@@ -1,5 +1,7 @@
 package domain.validation.user;
 
+import java.time.LocalDate;
+
 import domain.model.User;
 import domain.result.Notification;
 import domain.result.user.UserError;
@@ -28,18 +30,20 @@ public class UserCreationValidation {
             return;
         }
 
-        if (Email.isValidEmail(user.getEmail())) {
+        if (Email.isInvalid(user.getEmail())) {
             notification.addError(UserError.EMAIL_INVALID);
         }
     }
 
     private static void validateBirthDate(User user, Notification notification) {
         if (user.getBirthDate() == null) {
-            notification.addError(UserError.BIRTHDATE_REQUIRED);
+            notification.addError(UserError.USER_BIRTH_DATE_REQUIRED);
             return;
         }
 
-        if (user.isUnderage()) {
+        if (user.isUnderage(LocalDate.now(
+
+        ))) {
             notification.addError(UserError.UNDERAGE);
         }
     }
