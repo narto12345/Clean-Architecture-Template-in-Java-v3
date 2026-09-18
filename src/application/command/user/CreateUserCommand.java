@@ -2,6 +2,7 @@ package application.command.user;
 
 import application.dto.user.CreateUserRequestDto;
 import application.mediator.Command;
+import domain.model.User;
 import domain.result.Result;
 
 public class CreateUserCommand implements Command<Result<CreateUserResponse>> {
@@ -12,7 +13,11 @@ public class CreateUserCommand implements Command<Result<CreateUserResponse>> {
         this.request = request;
     }
 
-    public CreateUserRequestDto getCreateUser() {
-        return request;
+    public CreateUserRequestDto getRequest() {
+        return this.request;
+    }
+
+    public User toDamain() {
+        return User.createNew(request.getName(), request.getEmail(), request.getBirthDate());
     }
 }

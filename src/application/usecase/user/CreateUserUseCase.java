@@ -2,7 +2,6 @@ package application.usecase.user;
 
 import application.command.user.CreateUserCommand;
 import application.command.user.CreateUserResponse;
-import application.dto.user.CreateUserResponseDto;
 import domain.model.User;
 import domain.repository.UserRepository;
 import domain.result.Notification;
@@ -21,15 +20,14 @@ public class CreateUserUseCase implements CommandHandler<CreateUserCommand, Resu
     @Override
     public Result<CreateUserResponse> handle(CreateUserCommand createUserCommand) {
 
-        User userToCreate = createUserCommand.getCreateUser().toDomain();
-
+        User userToCreate = createUserCommand.toDamain();
         Notification notification = UserCreationValidation.validate(userToCreate);
 
         if (notification.hasErrors()) {
             return Result.failure(notification);
         }
 
-        Result<User> resultFindByEmailResult = userRepository.findByEmail(createUserCommand.getCreateUser().getEmail());
+        Result<User> resultFindByEmailResult = userRepository.findByEmail(userToCreate.getEmail());
         if (resultFindByEmailResult.isFailure()) {
             return Result.failure(resultFindByEmailResult.getNotification());
         }
@@ -43,6 +41,6 @@ public class CreateUserUseCase implements CommandHandler<CreateUserCommand, Resu
             return Result.failure(resultUserSave.getNotification());
         }
 
-        return Result.success(CreateUserResponse.fromDomain(userToCreate));
+        return Result.success(CreateUserResponse.fromDomain(resultUserSave.getValue()));
     }
 }

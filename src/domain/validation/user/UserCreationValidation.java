@@ -3,6 +3,7 @@ package domain.validation.user;
 import domain.model.User;
 import domain.result.Notification;
 import domain.result.user.UserError;
+import domain.validation.common.Email;
 
 public class UserCreationValidation {
     public static Notification validate(User user) {
@@ -24,6 +25,11 @@ public class UserCreationValidation {
     private static void validateEmail(User user, Notification notification) {
         if (user.getEmail() == null || user.getEmail().isBlank()) {
             notification.addError(UserError.EMAIL_REQUIRED);
+            return;
+        }
+
+        if (Email.isValidEmail(user.getEmail())) {
+            notification.addError(UserError.EMAIL_INVALID);
         }
     }
 

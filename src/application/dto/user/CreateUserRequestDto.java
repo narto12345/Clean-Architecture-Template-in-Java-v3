@@ -2,8 +2,6 @@ package application.dto.user;
 
 import java.time.LocalDate;
 
-import domain.model.User;
-
 public class CreateUserRequestDto {
     private final String name;
     private final String email;
@@ -25,9 +23,5 @@ public class CreateUserRequestDto {
 
     public LocalDate getBirthDate() {
         return birthDate;
-    }
-
-    public User toDomain() {
-        return new User(this.name, this.email, this.birthDate);
     }
 }

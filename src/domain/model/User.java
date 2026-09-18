@@ -2,6 +2,7 @@ package domain.model;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.UUID;
 
 public class User {
     private String id;
@@ -9,25 +10,19 @@ public class User {
     private String email;
     private LocalDate birthDate;
 
-    public User(String id, String name, String email, LocalDate birthDate) {
+    private User(String id, String name, String email, LocalDate birthDate) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.birthDate = birthDate;
     }
 
-    public User(String name, String email, LocalDate birthDate) {
-        this.name = name;
-        this.email = email;
-        this.birthDate = birthDate;
+    public static User createNew(String name, String email, LocalDate birthDate) {
+        return new User(UUID.randomUUID().toString(), name, email, birthDate);
     }
 
     public String getId() {
         return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getName() {
