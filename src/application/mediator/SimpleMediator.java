@@ -18,7 +18,7 @@ public class SimpleMediator implements Mediator {
     public <R extends Result<?>, C extends Command<R>> R send(C command) {
         CommandHandler<C, R> handler = (CommandHandler<C, R>) handlers.get(command.getClass());
         if (handler == null) {
-            throw new IllegalArgumentException("No hay un Handler registrado para " + command.getClass().getName());
+            throw new IllegalArgumentException("There is no registered Handler for " + command.getClass().getName());
         }
         return handler.handle(command);
     }

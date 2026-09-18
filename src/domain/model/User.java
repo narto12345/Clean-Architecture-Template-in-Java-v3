@@ -4,10 +4,10 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public class User {
-    private final String id;
-    private final String name;
-    private final String email;
-    private final LocalDate birthDate;
+    private String id;
+    private String name;
+    private String email;
+    private LocalDate birthDate;
 
     public User(String id, String name, String email, LocalDate birthDate) {
         this.id = id;
@@ -16,8 +16,18 @@ public class User {
         this.birthDate = birthDate;
     }
 
+    public User(String name, String email, LocalDate birthDate) {
+        this.name = name;
+        this.email = email;
+        this.birthDate = birthDate;
+    }
+
     public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

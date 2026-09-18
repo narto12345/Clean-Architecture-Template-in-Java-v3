@@ -1,15 +1,14 @@
 package application.usecase.user;
 
-import java.util.UUID;
-
 import application.command.user.CreateUserCommand;
 import application.command.user.CreateUserResponse;
+import application.dto.user.CreateUserResponseDto;
 import domain.model.User;
 import domain.repository.UserRepository;
 import domain.result.Notification;
 import domain.result.Result;
 import domain.result.user.UserError;
-import domain.validation.user.UserValidator;
+import domain.validation.user.UserCreationValidation;
 import application.mediator.CommandHandler;
 
 public class CreateUserUseCase implements CommandHandler<CreateUserCommand, Result<CreateUserResponse>> {
@@ -20,19 +19,17 @@ public class CreateUserUseCase implements CommandHandler<CreateUserCommand, Resu
     }
 
     @Override
-    public Result<CreateUserResponse> handle(CreateUserCommand command) {
-        User user = new User(UUID.randomUUID().toString(),
-                command.getName(),
-                command.getEmail(),
-                command.getBirthDate());
+    public Result<CreateUserResponse> handle(CreateUserCommand createUserCommand) {
 
-        Notification notification = UserValidator.validate(user);
+        User userToCreate = createUserCommand.getCreateUser().toDomain();
+
+        Notification notification = UserCreationValidation.validate(userToCreate);
 
         if (notification.hasErrors()) {
             return Result.failure(notification);
         }
 
-        Result<User> resultFindByEmailResult = userRepository.findByEmail(command.getEmail());
+        Result<User> resultFindByEmailResult = userRepository.findByEmail(createUserCommand.getCreateUser().getEmail());
         if (resultFindByEmailResult.isFailure()) {
             return Result.failure(resultFindByEmailResult.getNotification());
         }
@@ -41,11 +38,11 @@ public class CreateUserUseCase implements CommandHandler<CreateUserCommand, Resu
             return Result.failure(UserError.EMAIL_ALREADY_EXISTS);
         }
 
-        Result<User> resultUserSave = userRepository.save(user);
+        Result<User> resultUserSave = userRepository.save(userToCreate);
         if (resultUserSave.isFailure()) {
             return Result.failure(resultUserSave.getNotification());
         }
-        
-        return Result.success(new CreateUserResponse(resultUserSave.getValue()));
+
+        return Result.success(CreateUserResponse.fromDomain(userToCreate));
     }
 }
