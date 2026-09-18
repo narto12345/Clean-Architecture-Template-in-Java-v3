@@ -2,7 +2,10 @@ package application.command.user;
 
 import java.time.LocalDate;
 
-public class CreateUserCommand {
+import application.mediator.Command;
+import domain.result.Result;
+
+public class CreateUserCommand implements Command<Result<CreateUserResponse>> {
     private final String name;
     private final String email;
     private final LocalDate birthDate;
@@ -13,7 +16,15 @@ public class CreateUserCommand {
         this.birthDate = birthDate;
     }
 
-    public String getName() { return name; }
-    public String getEmail() { return email; }
-    public LocalDate getBirthDate() { return birthDate; }
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
 }
